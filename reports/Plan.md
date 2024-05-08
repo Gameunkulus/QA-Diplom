@@ -19,7 +19,7 @@
 
 ## Описание структуры приложения:
 
-<a href=""> Список элементов </a>;
+<a href="https://github.com/Gameunkulus/QA-Diplom/blob/main/AppDescription.xls"> Список элементов </a>;
 
 ## Список автоматизированного проверяемого функционала.
 
