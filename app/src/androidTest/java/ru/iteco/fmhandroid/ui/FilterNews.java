@@ -1,16 +1,24 @@
 package ru.iteco.fmhandroid.ui;
 
 
+import static tools.UIDevise.device;
+
+import android.os.RemoteException;
+
+import androidx.test.espresso.PerformException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.uiautomator.UiDevice;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDateTime;
 
-import filter.FilterNewsScreen;
+import screens.filter.FilterNewsScreen;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
@@ -31,6 +39,17 @@ public class FilterNews {
     private NewsScreen newsScreen = new NewsScreen();
     private FilterNewsScreen filterNewsScreen = new FilterNewsScreen();
 
+    @Before
+    public void logoutCheck() throws RemoteException {
+        device =
+                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        device.setOrientationNatural();
+        try {
+            authScreen.isAuthScreen();
+        } catch (PerformException e) {
+            mainScreen.clickLogOutBut();
+        }
+    }
     @Test
     public void filterNews() {
         Allure.step("Заполнение верными значением поля логин и пароль с id: " +

@@ -11,10 +11,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-
-import androidx.test.espresso.ViewInteraction;
-import androidx.test.platform.app.InstrumentationRegistry;
-import androidx.test.uiautomator.UiDevice;
+import static org.hamcrest.Matchers.not;
+import static tools.ToastMatcher.isToast;
 
 import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
@@ -23,10 +21,9 @@ import tools.UIDevise;
 
 
 public class AuthScreen {
-    private UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-
-    public ViewInteraction emptyToast(int id) {
-        return onView(withText(id)).inRoot(new GenerateData.ToastMatcher());
+    //проверка всплывающего сообщения
+    public void isToastMessageDisplayed(int textId) {
+        onView(withText(textId)).inRoot(isToast()).check(matches(not(isDisplayed())));
     }
 
     public void fillFields(GenerateData.AuthInfo info) {
@@ -43,12 +40,8 @@ public class AuthScreen {
         UIDevise.waitView(allOf(withText("Sign in"), withParent(withParent(withId(R.id.enter_button))))).perform(click());
     }
 
-    public void isAuthorisationPage(){
+    public void isAuthScreen(){
         UIDevise.waitView(allOf(withText(R.string.authorization))).check(matches(isDisplayed()));
-    }
-
-    public void checkToastMessage(int id, boolean visible) {
-            emptyToast(id).check(matches(isDisplayed()));
     }
 
     public void clickEnterButton() {

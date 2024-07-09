@@ -8,12 +8,19 @@ import static androidx.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
-import android.content.Intent;
+import static tools.UIDevise.device;
 
+import android.content.Intent;
+import android.os.RemoteException;
+
+import androidx.test.espresso.PerformException;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.uiautomator.UiDevice;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +44,18 @@ public class AboutPrivacyPolicy {
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
     private AboutScreen aboutScreen = new AboutScreen();
+
+    @Before
+    public void logoutCheck() throws RemoteException {
+        device =
+                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        device.setOrientationNatural();
+        try {
+            authScreen.isAuthScreen();
+        } catch (PerformException e) {
+            mainScreen.clickLogOutBut();
+        }
+    }
 
     @Test
     public void aboutPrivacyPolicy() {

@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 
 public class UIDevise {
 
-    private static UiDevice device;
+    public static UiDevice device;
     private static final int LAUNCH_TIMEOUT = 5000;
 
     public static ModRecyclerViewActions.RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {

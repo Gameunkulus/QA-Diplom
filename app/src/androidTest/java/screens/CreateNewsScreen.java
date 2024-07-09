@@ -29,7 +29,7 @@ import org.hamcrest.Matchers;
 
 import java.time.LocalDateTime;
 
-import blocks.ContainerScreen;
+import screens.filter.blocks.ContainerScreen;
 import ru.iteco.fmhandroid.R;
 import tools.GenerateData;
 import tools.UIDevise;

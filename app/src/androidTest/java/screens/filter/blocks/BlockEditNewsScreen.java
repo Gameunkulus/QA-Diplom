@@ -1,4 +1,4 @@
-package blocks;
+package screens.filter.blocks;
 
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;

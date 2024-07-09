@@ -1,11 +1,15 @@
 package ru.iteco.fmhandroid.ui;
 
 
-import android.view.View;
+import static tools.UIDevise.device;
 
-import androidx.test.core.app.ActivityScenario;
+import android.os.RemoteException;
+
+import androidx.test.espresso.PerformException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.uiautomator.UiDevice;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -28,18 +32,19 @@ public class TestLogin {
     @Rule
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(AppActivity.class);
-    private View decorView;
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
 
     @Before
-    public void setUp() {
-        mActivityScenarioRule.getScenario().onActivity(new ActivityScenario.ActivityAction<AppActivity>() {
-            @Override
-            public void perform(AppActivity activity) {
-                decorView = activity.getWindow().getDecorView();
-            }
-        });
+    public void logoutCheck() throws RemoteException {
+        device =
+                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        device.setOrientationNatural();
+        try {
+            authScreen.isAuthScreen();
+        } catch (PerformException e) {
+            mainScreen.clickLogOutBut();
+        }
     }
 
     @Test
@@ -48,12 +53,10 @@ public class TestLogin {
                 R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
         authScreen.fillFields(GenerateData.invalidAuthInfo());
         Allure.step("Нажатие на кнопку войти: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
+                R.id.enter_button + ";" );
         authScreen.clickEnterButton();
-        Allure.step("Получение сообщения об ошибке: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
-        authScreen.checkToastMessage(R.string.wrong_login_or_password, true);
-
+        Allure.step("Получение сообщения об ошибке: " + R.string.error + ";" );
+        authScreen.isToastMessageDisplayed(R.string.error);
     }
 
     @Test

@@ -1,4 +1,4 @@
-package blocks;
+package screens.filter.blocks;
 
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -16,19 +16,19 @@ import tools.UIDevise;
 public class BlockNewsScreen {
 
     public Matcher<View> blockExpandBtn = withContentDescription(R.string.expand_news_button);
-    public Matcher<View> blockTitle = withText(R.string.news_item_title).toString();
-    public Matcher<View> blockDate = withText(R.string.news_item_date).toString();
-    public Matcher<View> blockDescription = withText(R.string.news_item_description).toString();
+    public Matcher<View> blockTitle = withText(R.string.news_item_title);
+    public Matcher<View> blockDate = withText(R.string.news_item_date);
+    public Matcher<View> blockDescription = withText(R.string.news_item_description);
 
     public ViewInteraction pressExpandBtn(){
-        UIDevise.waitView(blockExpandBtn).perform(click());
+        return UIDevise.waitView(blockExpandBtn).perform(click());
     }
 
     public ViewInteraction getBlockTitle(){
-        return blockTitle;
+        return UIDevise.waitView(blockTitle);
     }
 
-    public ViewInteraction getDate() { return blockDate; }
+    public ViewInteraction getDate() { return UIDevise.waitView(blockDate); }
 
-    public ViewInteraction getDescription() { return blockDescription; }
+    public ViewInteraction getDescription() { return  UIDevise.waitView(blockDescription); }
 }

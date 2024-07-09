@@ -1,9 +1,17 @@
 package ru.iteco.fmhandroid.ui;
 
 
+import static tools.UIDevise.device;
+
+import android.os.RemoteException;
+
+import androidx.test.espresso.PerformException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.uiautomator.UiDevice;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +32,17 @@ public class TestAuthorisationButton {
             new ActivityScenarioRule<>(AppActivity.class);
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
+    @Before
+    public void logoutCheck() throws RemoteException {
+        device =
+                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        device.setOrientationNatural();
+        try {
+            authScreen.isAuthScreen();
+        } catch (PerformException e) {
+            mainScreen.clickLogOutBut();
+        }
+    }
 
     @Test
     public void testAuthorisationButton() {
@@ -37,6 +56,6 @@ public class TestAuthorisationButton {
         Allure.step("Нажатие на кнопку выхода из аккаунта.");
         mainScreen.clickLogOutBut();
         Allure.step("Проверка перехода на страницу авторизации.");
-        authScreen.isAuthorisationPage();
+        authScreen.isAuthScreen();
     }
 }

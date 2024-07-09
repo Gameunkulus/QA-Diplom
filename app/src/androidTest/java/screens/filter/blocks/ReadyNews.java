@@ -1,4 +1,4 @@
-package blocks;
+package screens.filter.blocks;
 
 public class ReadyNews {
         int newsCategoryId = 5;

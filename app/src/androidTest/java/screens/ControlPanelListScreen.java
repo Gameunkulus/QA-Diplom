@@ -8,6 +8,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
+import static tools.ToastMatcher.isToast;
 
 import android.view.View;
 
@@ -36,8 +37,8 @@ public class ControlPanelListScreen {
         UIDevise.waitView(openFilterButton).perform(click());
     }
 
-    public ViewInteraction wrongСategoryToast(String text) {
-        return onView(withText(text)).inRoot(new GenerateData.ToastMatcher());
+    public ViewInteraction wrongСategoryToast(int idText) {
+        return onView(withText(idText)).inRoot(isToast()).check(matches(isDisplayed()));
     }
 
     //проверка перехода на страницу контрольной панели
@@ -59,11 +60,11 @@ public class ControlPanelListScreen {
     }
 
     //проверка всплывающего сообщения
-    public void checkToast(String text, boolean visible) {
+    public void checkToast(int idText, boolean visible) {
         if (visible) {
-            wrongСategoryToast(text).check(matches(isDisplayed()));
+            wrongСategoryToast(idText).check(matches(isDisplayed()));
         } else {
-            wrongСategoryToast(text).check(matches(not(isDisplayed())));
+            wrongСategoryToast(idText).check(matches(not(isDisplayed())));
         }
     }
 
