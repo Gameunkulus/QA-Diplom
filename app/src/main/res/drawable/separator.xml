@@ -7,12 +7,9 @@
     android:viewportHeight="1"
     tools:ignore="VectorRaster">
     <group>
-        <clip-path
-            android:pathData="M0 0H311V1H0V0Z"
-            />
+        <clip-path android:pathData="M0 0H311V1H0V0Z" />
         <path
             android:pathData="M0 0V1H311V0"
-            android:fillColor="#14000000"
-            />
+            android:fillColor="#14000000" />
     </group>
 </vector>

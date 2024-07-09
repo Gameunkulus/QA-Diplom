@@ -7,13 +7,22 @@ import android.os.Build
 import android.widget.EditText
 import retrofit2.Response
 import ru.iteco.fmhandroid.dto.User
-import ru.iteco.fmhandroid.exceptions.*
+import ru.iteco.fmhandroid.exceptions.ApiException
+import ru.iteco.fmhandroid.exceptions.AuthorizationException
+import ru.iteco.fmhandroid.exceptions.LostConnectException
+import ru.iteco.fmhandroid.exceptions.ServerException
+import ru.iteco.fmhandroid.exceptions.UnknownException
 import java.io.IOException
 import java.net.ConnectException
 import java.text.SimpleDateFormat
-import java.time.*
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 object Utils {
     object Empty {

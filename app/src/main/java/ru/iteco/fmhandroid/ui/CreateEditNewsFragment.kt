@@ -29,7 +29,7 @@ import ru.iteco.fmhandroid.viewmodel.NewsControlPanelViewModel
 import java.time.Instant.now
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.*
+import java.util.Calendar
 
 @AndroidEntryPoint
 class CreateEditNewsFragment : Fragment(R.layout.fragment_create_edit_news) {

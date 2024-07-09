@@ -4,7 +4,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import ru.iteco.fmhandroid.dto.News
 import ru.iteco.fmhandroid.dto.NewsWithCategory
-import ru.iteco.fmhandroid.dto.User
 
 interface NewsRepository {
     val newsList: List<News>

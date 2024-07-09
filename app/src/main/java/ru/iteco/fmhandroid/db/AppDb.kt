@@ -2,7 +2,8 @@ package ru.iteco.fmhandroid.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ru.iteco.fmhandroid.dao.*
+import ru.iteco.fmhandroid.dao.NewsCategoryDao
+import ru.iteco.fmhandroid.dao.NewsDao
 import ru.iteco.fmhandroid.entity.NewsCategoryEntity
 import ru.iteco.fmhandroid.entity.NewsEntity
 

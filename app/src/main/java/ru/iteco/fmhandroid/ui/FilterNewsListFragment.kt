@@ -22,7 +22,7 @@ import ru.iteco.fmhandroid.enum.FragmentsTags
 import ru.iteco.fmhandroid.utils.Utils.saveDateTime
 import ru.iteco.fmhandroid.utils.Utils.updateDateLabel
 import ru.iteco.fmhandroid.viewmodel.NewsViewModel
-import java.util.*
+import java.util.Calendar
 
 @AndroidEntryPoint
 class FilterNewsListFragment : Fragment(R.layout.fragment_filter_news) {
@@ -50,6 +50,7 @@ class FilterNewsListFragment : Fragment(R.layout.fragment_filter_news) {
                 binding.filterNewsActiveMaterialCheckBox.visibility = View.GONE
                 binding.filterNewsInactiveMaterialCheckBox.visibility = View.GONE
             }
+
             FragmentsTags.NEWS_CONTROL_PANEL_FRAGMENT -> {
                 binding.filterNewsActiveMaterialCheckBox.visibility = View.VISIBLE
                 binding.filterNewsInactiveMaterialCheckBox.visibility = View.VISIBLE

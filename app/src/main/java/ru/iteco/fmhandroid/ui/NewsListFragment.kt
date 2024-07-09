@@ -62,6 +62,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
                     findNavController().navigate(R.id.action_newsListFragment_to_aboutFragment)
                     true
                 }
+
                 else -> {
                     false
                 }
@@ -89,6 +90,7 @@ class NewsListFragment : Fragment(R.layout.fragment_news_list) {
                     findNavController().navigate(R.id.action_newsListFragment_to_authFragment)
                     true
                 }
+
                 else -> false
             }
         }

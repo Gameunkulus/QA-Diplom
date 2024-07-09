@@ -170,6 +170,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
                 binding.splashScreenCircularProgressIndicator.trackColor =
                     ContextCompat.getColor(requireContext(), R.color.splash_screen_title_1)
             }
+
             R.drawable.background_splash_screen_title_2 -> {
                 binding.splashScreenCircularProgressIndicator.setIndicatorColor(
                     ContextCompat.getColor(
@@ -180,6 +181,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
                 binding.splashScreenCircularProgressIndicator.trackColor =
                     ContextCompat.getColor(requireContext(), R.color.splash_screen_title_2)
             }
+
             R.drawable.background_splash_screen_title_3 -> {
                 binding.splashScreenCircularProgressIndicator.setIndicatorColor(
                     ContextCompat.getColor(
@@ -190,6 +192,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
                 binding.splashScreenCircularProgressIndicator.trackColor =
                     ContextCompat.getColor(requireContext(), R.color.splash_screen_title_3)
             }
+
             R.drawable.background_splash_screen_title_4 -> {
                 binding.splashScreenCircularProgressIndicator.setIndicatorColor(
                     ContextCompat.getColor(
@@ -200,6 +203,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
                 binding.splashScreenCircularProgressIndicator.trackColor =
                     ContextCompat.getColor(requireContext(), R.color.splash_screen_title_4)
             }
+
             R.drawable.background_splash_screen_title_5 -> {
                 binding.splashScreenCircularProgressIndicator.setIndicatorColor(
                     ContextCompat.getColor(
@@ -210,6 +214,7 @@ class SplashScreenFragment : Fragment(R.layout.fragment_splash_screen) {
                 binding.splashScreenCircularProgressIndicator.trackColor =
                     ContextCompat.getColor(requireContext(), R.color.splash_screen_title_5)
             }
+
             R.drawable.background_splash_screen_title_6 -> {
                 binding.splashScreenCircularProgressIndicator.setIndicatorColor(
                     ContextCompat.getColor(
