@@ -40,6 +40,7 @@ public class TestLogin {
     public ActivityScenarioRule<AppActivity> activityScenarioRule = new ActivityScenarioRule<>(AppActivity.class);
     private View decorView;
 
+
     @Before
     public void logoutCheck() throws RemoteException {
         device =
