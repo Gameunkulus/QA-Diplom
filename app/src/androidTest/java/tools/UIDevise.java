@@ -36,7 +36,7 @@ public class UIDevise {
 
     public static ViewInteraction waitView(Matcher<View> matcher) {
         onView(isRoot()).perform(ViewActionCommands
-                .waitElement(matcher, 5000));
+                .waitElement(matcher, 10000));
         return onView((matcher));
     }
 

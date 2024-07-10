@@ -12,6 +12,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
+
 import static tools.ToastMatcher.isToast;
 
 import io.qameta.allure.kotlin.Allure;
@@ -21,9 +22,11 @@ import tools.UIDevise;
 
 
 public class AuthScreen {
+
     //проверка всплывающего сообщения
     public void isToastMessageDisplayed(int textId) {
-        onView(withText(textId)).inRoot(isToast()).check(matches(not(isDisplayed())));
+        UIDevise.waitView(withText(textId)).inRoot(isToast()).check(matches(not(isDisplayed())));
+
     }
 
     public void fillFields(GenerateData.AuthInfo info) {

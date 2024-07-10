@@ -1,10 +1,13 @@
 package ru.iteco.fmhandroid.ui;
 
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static tools.UIDevise.device;
 
 import android.os.RemoteException;
+import android.view.View;
 
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.PerformException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
@@ -34,6 +37,8 @@ public class TestLogin {
             new ActivityScenarioRule<>(AppActivity.class);
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
+    public ActivityScenarioRule<AppActivity> activityScenarioRule = new ActivityScenarioRule<>(AppActivity.class);
+    private View decorView;
 
     @Before
     public void logoutCheck() throws RemoteException {
@@ -47,6 +52,16 @@ public class TestLogin {
         }
     }
 
+    @Before
+    public void setUp() {
+        mActivityScenarioRule.getScenario().onActivity(new ActivityScenario.ActivityAction<AppActivity>() {
+            @Override
+            public void perform(AppActivity activity) {
+                decorView = activity.getWindow().getDecorView();
+            }
+        });
+    }
+
     @Test
     public void testInvalidPassword() {
         Allure.step("Заполнение верным значением поля логин и неверным значением пароля с id: " +
@@ -54,9 +69,11 @@ public class TestLogin {
         authScreen.fillFields(GenerateData.invalidAuthInfo());
         Allure.step("Нажатие на кнопку войти: " +
                 R.id.enter_button + ";" );
+        String expectedWarning = getApplicationContext().getString(R.string.error);
         authScreen.clickEnterButton();
         Allure.step("Получение сообщения об ошибке: " + R.string.error + ";" );
         authScreen.isToastMessageDisplayed(R.string.error);
+
     }
 
     @Test

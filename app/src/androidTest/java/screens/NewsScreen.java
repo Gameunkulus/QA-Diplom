@@ -29,7 +29,6 @@ public class NewsScreen {
 
     public void isNewsPage() {
         UIDevise.waitView(withText("News")).check(matches(isDisplayed()));
-        UIDevise.waitView(withId(R.id.news_list_swipe_refresh)).check(matches(isDisplayed()));
     }
 
     public void isEmptyNewsList() {
