@@ -5,9 +5,7 @@ import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static tools.UIDevise.device;
 
 import android.os.RemoteException;
-import android.view.View;
 
-import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.PerformException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
@@ -37,8 +35,6 @@ public class TestLogin {
             new ActivityScenarioRule<>(AppActivity.class);
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
-    public ActivityScenarioRule<AppActivity> activityScenarioRule = new ActivityScenarioRule<>(AppActivity.class);
-    private View decorView;
 
 
     @Before
@@ -51,16 +47,6 @@ public class TestLogin {
         } catch (PerformException e) {
             mainScreen.clickLogOutBut();
         }
-    }
-
-    @Before
-    public void setUp() {
-        mActivityScenarioRule.getScenario().onActivity(new ActivityScenario.ActivityAction<AppActivity>() {
-            @Override
-            public void perform(AppActivity activity) {
-                decorView = activity.getWindow().getDecorView();
-            }
-        });
     }
 
     @Test

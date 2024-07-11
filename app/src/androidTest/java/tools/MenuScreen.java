@@ -6,6 +6,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import static org.hamcrest.Matchers.not;
+
 import android.view.View;
 
 import org.hamcrest.Matcher;
@@ -21,28 +23,27 @@ public class MenuScreen {
     public Matcher<View> mainMenuImBut = withId(R.id.main_menu_image_button);
 
     public void menuIsOnScreen() {
-        UIDevise.waitView(menuMainButton).check(matches(isDisplayed()));
-        UIDevise.waitView(menuNewsButton).check(matches(isDisplayed()));
-        UIDevise.waitView(menuAboutButton).check(matches(isDisplayed()));
-    }
-
-    public void menuIsActive(){
-        UIDevise.waitView(menuMainButton).check(matches(isClickable()));
-        UIDevise.waitView(menuNewsButton).check(matches(isClickable()));
-        UIDevise.waitView(menuAboutButton).check(matches(isClickable()));
+        UIDevise.waitView(mainMenuImBut).check(matches(isDisplayed()));
     }
 
     public void openTheMainMenu() {
-        UIDevise.waitView(mainMenuImBut).perform(click());
+        if (menuAboutButton.matches(not(isDisplayed()))) {
+            UIDevise.waitView(mainMenuImBut).perform(click());
+        }
     }
 
-    public void clickMain(){
+    public void clickMain() {
+        UIDevise.waitView(menuMainButton).check(matches(isClickable()));
         UIDevise.waitView(menuMainButton).perform(click());
     }
-    public void clickNews(){
+
+    public void clickNews() {
+        UIDevise.waitView(menuNewsButton).check(matches(isClickable()));
         UIDevise.waitView(menuNewsButton).perform(click());
     }
+
     public void clickAbout() {
+        UIDevise.waitView(menuAboutButton).check(matches(isClickable()));
         UIDevise.waitView(menuAboutButton).perform(click());
     }
 }
