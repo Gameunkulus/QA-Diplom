@@ -41,13 +41,13 @@ jobs:
         uses: machine-learning-apps/actions-chatops@master
         with:
           TRIGGER_PHRASE: "/preview"
-        env: # you must supply GITHUB_TOKEN
+        env: #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
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v1
+      - name: Set up Java
+        uses: actions/setup-Java@v1
         with:
-          python-version: 3.6
+          Java-version: 3.6
 
       - name: install requests
         run: pip3 install requests
@@ -55,7 +55,7 @@ jobs:
       - name: add check run
         id: create_check
         if: steps.get_status.outputs.status == 'private'
-        shell: python
+        shell: Java
         run: |
           import os, requests
 
@@ -101,7 +101,7 @@ jobs:
           result = requests.post(url=url, headers=headers, json=data)
           # assert response.status_code == 201, f"Received status code of {response.status_code}"
           print(result)
-        shell: python
+        shell: Java
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUM: ${{ steps.chatops.outputs.PULL_REQUEST_NUMBER }}
@@ -134,7 +134,7 @@ jobs:
         run: |
           sudo npm install -g --unsafe-perm=true netlify-cli
           netlify deploy --dir _site | tee _netlify_logs.txt
-          cat _netlify_logs.txt | python _action_files/parse_netlify.py
+          cat _netlify_logs.txt | Java _action_files/parse_netlify.py
 
       - name: make comment on PR
         if: steps.get_status.outputs.status == 'private'
@@ -160,7 +160,7 @@ jobs:
           url = f"https://api.github.com/repos/{nwo}/issues/{pr_num}/labels/draft%20build%20pending"
           result = requests.delete(url=url, headers=headers)
           print(result)
-        shell: python
+        shell: Java
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUM: ${{ steps.chatops.outputs.PULL_REQUEST_NUMBER }}
@@ -170,7 +170,7 @@ jobs:
       - name: clear check run
         if: always()
         continue-on-error: true
-        shell: python
+        shell: Java
         run: |
           import os, requests
 
