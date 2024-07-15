@@ -11,11 +11,14 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
+import io.qameta.allure.android.rules.LogcatRule;
+import io.qameta.allure.android.rules.ScreenshotRule;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import io.qameta.allure.kotlin.Allure;
 import screens.AboutScreen;
@@ -31,8 +34,10 @@ import tools.MenuScreen;
 public class PageTransfer {
 
     @Rule
-    public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(AppActivity.class);
+    public RuleChain ruleChain = RuleChain
+            .outerRule(new LogcatRule())
+            .around(new ActivityScenarioRule<>(AppActivity.class))
+            .around(new ScreenshotRule());
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
     private NewsScreen newsScreen = new NewsScreen();
@@ -41,21 +46,22 @@ public class PageTransfer {
     private ControlPanelListScreen controlPanelListScreen = new ControlPanelListScreen();
 
 
-    @Before
+    @BeforeEach
     public void logoutCheck() throws RemoteException {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         device.setOrientationNatural();
         try {
-            authScreen.isAuthScreen();
+            mainScreen.isMainPage();
         } catch (PerformException e) {
             mainScreen.clickLogOutBut();
         }
-        authScreen.fillFields(GenerateData.authInfo());
-        authScreen.clickEnterButton();
-        mainScreen.isMainPage();
+
     }
     @Test
     public void pageTransferMainNews() {
+        authScreen.fillFields(GenerateData.authInfo());
+        authScreen.clickEnterButton();
+        mainScreen.isMainPage();
         Allure.step("Проверка что меню на экране есть.");
         menuScreen.menuIsOnScreen();
         Allure.step("Открытие бокового меню.");
@@ -66,15 +72,10 @@ public class PageTransfer {
         newsScreen.isNewsPage();
     }
 
-
-    @Before
-    public void logoutCheck2() {
+    public void pageTransferMainAbout() {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
-    }
-
-    public void pageTransferMainAbout() {
         Allure.step("Проверка что меню на экране есть.");
         menuScreen.menuIsOnScreen();
         Allure.step("Открытие бокового меню.");
@@ -85,16 +86,12 @@ public class PageTransfer {
         aboutScreen.isAboutPage();
     }
 
-    @Before
-    public void logoutCheck3() {
+    @Test
+    public void pageTransferNewsAbout() {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
-    }
-
-    @Test
-    public void pageTransferNewsAbout() {
         Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
         Allure.step("Открытие бокового меню.");
@@ -105,16 +102,12 @@ public class PageTransfer {
         aboutScreen.isAboutPage();
     }
 
-    @Before
-    public void logoutCheck4() {
+    @Test
+    public void pageTransferNewsMain() {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
-    }
-
-    @Test
-    public void pageTransferNewsMain() {
         Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
         Allure.step("Открытие бокового меню.");
@@ -125,13 +118,12 @@ public class PageTransfer {
         mainScreen.isMainPage();
     }
 
-    @Before
-    public void logoutCheck5() {
-
-    }
-
     @Test
     public void pageTransferNewsControlPanel() {
+        authScreen.fillFields(GenerateData.authInfo());
+        authScreen.clickEnterButton();
+        mainScreen.isMainPage();
+        mainScreen.openNewsPageThroughTheMainMenu();
         Allure.step("Вход с помощью валидных данных.");
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
@@ -153,32 +145,24 @@ public class PageTransfer {
         mainScreen.isMainPage();
     }
 
-    @Before
-    public void logoutCheck6() {
+    @Test
+    public void pageFalseTransferAboutMain() {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openAboutPageThroughTheMainMenu();
-    }
-
-    @Test
-    public void pageFalseTransferAboutMain() {
         Allure.step("На главной странице экрана.");
         aboutScreen.isAboutPage();
         Allure.step("Поиск меню на странице экрана. Меню на странице экрана отсутствует");
         menuScreen.menuIsOnScreen();
     }
 
-    @Before
-    public void logoutCheck7() {
+    @Test
+    public void pageTransferAboutMain() {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openAboutPageThroughTheMainMenu();
-    }
-
-    @Test
-    public void pageTransferAboutMain() {
         Allure.step("На главной странице экрана.");
         aboutScreen.isAboutPage();
         Allure.step("Возвращаемся на главную страницу нажатием на кнопку назад.");
@@ -187,18 +171,13 @@ public class PageTransfer {
         mainScreen.isMainPage();
     }
 
-
-    @Before
-    public void logoutCheck8() {
+    @Test
+    public void pageTransferControlPanelMain() {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
         newsScreen.openEditPanel();
-    }
-
-    @Test
-    public void pageTransferControlPanelMain() {
         Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
         menuScreen.openTheMainMenu();
@@ -208,18 +187,13 @@ public class PageTransfer {
         mainScreen.isMainPage();
     }
 
-
-    @Before
-    public void logoutCheck9() {
+    @Test
+    public void pageTransferControlPanelNews() {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
         newsScreen.openEditPanel();
-    }
-
-    @Test
-    public void pageTransferControlPanelNews() {
         Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
         menuScreen.openTheMainMenu();
@@ -229,18 +203,13 @@ public class PageTransfer {
         mainScreen.isMainPage();
     }
 
-
-    @Before
-    public void logoutCheck10() {
+    @Test
+    public void pageTransferControlPanelAbout() {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
         newsScreen.openEditPanel();
-    }
-
-    @Test
-    public void pageTransferControlPanelAbout() {
         Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
         menuScreen.openTheMainMenu();

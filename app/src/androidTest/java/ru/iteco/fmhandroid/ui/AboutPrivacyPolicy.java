@@ -12,6 +12,7 @@ import static tools.UIDevise.device;
 
 import android.content.Intent;
 import android.os.RemoteException;
+import android.webkit.WebChromeClient;
 
 import androidx.test.espresso.PerformException;
 import androidx.test.espresso.intent.Intents;
@@ -44,11 +45,14 @@ public class AboutPrivacyPolicy {
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
     private AboutScreen aboutScreen = new AboutScreen();
+    private WebChromeClient chromeClient = new WebChromeClient();
+    private String uriPrivacyPolicy = "https://vhospice.org/#/privacy-policy/";
+
+
 
     @Before
     public void logoutCheck() throws RemoteException {
-        device =
-                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         device.setOrientationNatural();
         try {
             authScreen.isAuthScreen();
@@ -71,7 +75,7 @@ public class AboutPrivacyPolicy {
         mainScreen.openAboutPageThroughTheMainMenu();
         aboutScreen.isAboutPage();
         aboutScreen.openPrivacyPolicy();
-        intended(allOf(hasData( "https://vhospice.org/#/privacy-policy/"), hasAction(Intent.ACTION_VIEW)));
+        intended(allOf(hasData(uriPrivacyPolicy), hasAction(Intent.ACTION_VIEW)));
         Intents.release();
         aboutScreen.getHeaderPrivacyPolicyPage().check(matches(withText("Privacy policy")));
 
