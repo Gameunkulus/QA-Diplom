@@ -14,6 +14,7 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
@@ -28,7 +29,9 @@ import screens.MainScreen;
 import screens.NewsScreen;
 import tools.GenerateData;
 import tools.MenuScreen;
+import tools.TestListener;
 
+@ExtendWith(TestListener.class)
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
 public class PageTransfer {

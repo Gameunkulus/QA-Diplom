@@ -14,6 +14,7 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
@@ -23,7 +24,9 @@ import screens.AuthScreen;
 import screens.MainScreen;
 import screens.OurMissionScreen;
 import tools.GenerateData;
+import tools.TestListener;
 
+@ExtendWith(TestListener.class)
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
 public class TestOurMissionButton {
