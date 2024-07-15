@@ -1,6 +1,7 @@
 package ru.iteco.fmhandroid.ui;
 
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static tools.UIDevise.device;
 
 import android.os.RemoteException;
@@ -48,19 +49,19 @@ public class TestLogin {
         }
     }
 
-//    @Test
-//    public void testInvalidPassword() {
-//        Allure.step("Заполнение верным значением поля логин и неверным значением пароля с id: " +
-//                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
-//        authScreen.fillFields(GenerateData.invalidAuthInfo());
-//        Allure.step("Нажатие на кнопку войти: " +
-//                R.id.enter_button + ";" );
-//        String expectedWarning = getApplicationContext().getString(R.string.error);
-//        authScreen.clickEnterButton();
-//        Allure.step("Получение сообщения об ошибке: " + R.string.error + ";" );
-//        authScreen.isToastMessageDisplayed(R.string.error);
-//
-//    }
+    @Test
+    public void testInvalidPassword() {
+        Allure.step("Заполнение верным значением поля логин и неверным значением пароля с id: " +
+                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
+        authScreen.fillFields(GenerateData.invalidAuthInfo());
+        Allure.step("Нажатие на кнопку войти: " +
+                R.id.enter_button + ";" );
+        String expectedWarning = getApplicationContext().getString(R.string.error);
+        authScreen.clickEnterButton();
+        Allure.step("Получение сообщения об ошибке: " + R.string.error + ";" );
+        authScreen.isToastMessageDisplayed(R.string.error);
+
+    }
 
     @Test
     public void testValidLogin() {

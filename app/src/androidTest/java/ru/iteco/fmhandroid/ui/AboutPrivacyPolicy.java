@@ -74,7 +74,7 @@ public class AboutPrivacyPolicy {
         Allure.step("Переход на страницу о приложении через нажатие кнопки в меню." );
         mainScreen.openAboutPageThroughTheMainMenu();
         aboutScreen.isAboutPage();
-        aboutScreen.openPrivacyPolicy();
+        aboutScreen.openPrivacyPolicy();;
         intended(allOf(hasData(uriPrivacyPolicy), hasAction(Intent.ACTION_VIEW)));
         Intents.release();
         aboutScreen.getHeaderPrivacyPolicyPage().check(matches(withText("Privacy policy")));
