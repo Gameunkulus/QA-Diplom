@@ -1,4 +1,4 @@
-package ru.iteco.fmhandroid.ui;
+package ru.iteco.fmhandroid.ui.tests;
 
 
 import static tools.UIDevise.device;
@@ -14,27 +14,27 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
-import io.qameta.allure.kotlin.Allure;
-import ru.iteco.fmhandroid.R;
+import ru.iteco.fmhandroid.ui.AppActivity;
 import screens.AuthScreen;
 import screens.MainScreen;
+import screens.NewsScreen;
 import tools.GenerateData;
-import tools.TestListener;
 
-@ExtendWith(TestListener.class)
+
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
-public class TestAuthorisationButton {
+public class HypertextAllNewsPressTest {
 
     @Rule
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(AppActivity.class);
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
+    private NewsScreen newsScreen = new NewsScreen();
+
     @Before
     public void logoutCheck() throws RemoteException {
         device =
@@ -46,19 +46,14 @@ public class TestAuthorisationButton {
             mainScreen.clickLogOutBut();
         }
     }
-
     @Test
-    public void testAuthorisationButton() {
-        Allure.step("Заполнение верными значением поля логин и пароль с id: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";");
+    public void hypertextAllNews() {
         authScreen.fillFields(GenerateData.authInfo());
-        Allure.step("Нажатие на кнопку войти.");
         authScreen.clickEnterButton();
-        Allure.step("Проверка перехода на главную страницу.");
         mainScreen.isMainPage();
-        Allure.step("Нажатие на кнопку выхода из аккаунта.");
-        mainScreen.clickLogOutBut();
-        Allure.step("Проверка перехода на страницу авторизации.");
-        authScreen.isAuthScreen();
+        mainScreen.newsExpandMaterialButtonClick();
+        mainScreen.newsExpandMaterialButtonClick();
+        mainScreen.clickAllNewsBut();
+        newsScreen.isNewsPage();
     }
 }

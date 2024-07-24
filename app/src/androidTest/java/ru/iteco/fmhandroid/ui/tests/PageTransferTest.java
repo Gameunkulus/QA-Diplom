@@ -1,4 +1,4 @@
-package ru.iteco.fmhandroid.ui;
+package ru.iteco.fmhandroid.ui.tests;
 
 
 import static tools.UIDevise.device;
@@ -14,14 +14,13 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
 import io.qameta.allure.android.rules.LogcatRule;
 import io.qameta.allure.android.rules.ScreenshotRule;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
-import io.qameta.allure.kotlin.Allure;
+import ru.iteco.fmhandroid.ui.AppActivity;
 import screens.AboutScreen;
 import screens.AuthScreen;
 import screens.ControlPanelListScreen;
@@ -29,12 +28,11 @@ import screens.MainScreen;
 import screens.NewsScreen;
 import tools.GenerateData;
 import tools.MenuScreen;
-import tools.TestListener;
 
-@ExtendWith(TestListener.class)
+
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
-public class PageTransfer {
+public class PageTransferTest {
 
     @Rule
     public RuleChain ruleChain = RuleChain
@@ -65,13 +63,9 @@ public class PageTransfer {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
-        Allure.step("Проверка что меню на экране есть.");
         menuScreen.menuIsOnScreen();
-        Allure.step("Открытие бокового меню.");
         menuScreen.openTheMainMenu();
-        Allure.step("Переход на страницу новостей при нажатии на кнопку в открывшемся меню.");
         menuScreen.clickNews();
-        Allure.step("Проверка что переход на страницу новостей выполнен.");
         newsScreen.isNewsPage();
     }
 
@@ -79,13 +73,9 @@ public class PageTransfer {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
-        Allure.step("Проверка что меню на экране есть.");
         menuScreen.menuIsOnScreen();
-        Allure.step("Открытие бокового меню.");
         menuScreen.openTheMainMenu();
-        Allure.step("Переход на страницу о приложении при нажатии на кнопку в открывшемся меню.");
         menuScreen.clickAbout();
-        Allure.step("Проверка что переход на страницу новостей выполнен.");
         aboutScreen.isAboutPage();
     }
 
@@ -95,13 +85,9 @@ public class PageTransfer {
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
-        Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
-        Allure.step("Открытие бокового меню.");
         menuScreen.openTheMainMenu();
-        Allure.step("Переход на страницу о приложении при нажатии на кнопку в открывшемся меню.");
         menuScreen.clickAbout();
-        Allure.step("Проверка что переход на страницу о приложении выполнен.");
         aboutScreen.isAboutPage();
     }
 
@@ -111,13 +97,9 @@ public class PageTransfer {
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
-        Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
-        Allure.step("Открытие бокового меню.");
         menuScreen.openTheMainMenu();
-        Allure.step("Переход на главную страницу приложения при нажатии на кнопку в открывшемся меню.");
-        menuScreen.clickMain();
-        Allure.step("Проверка что переход на главную страницу о выполнен.");
+        menuScreen.openTheMainMenu();
         mainScreen.isMainPage();
     }
 
@@ -127,24 +109,16 @@ public class PageTransfer {
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
-        Allure.step("Вход с помощью валидных данных.");
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
-        Allure.step("Проверка входа на главную страницу.");
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
-        Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
-        Allure.step("Переход на страницу редактирования ленты новостей.");
         newsScreen.openEditPanel();
-        Allure.step("Открыта страница редактирования.");
         controlPanelListScreen.isControlPanel();
-        Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
-        Allure.step("Возврат на главную страницу приложения.");
         menuScreen.openTheMainMenu();
-        menuScreen.clickMain();
-        Allure.step("Открыта главная страница приложения.");
+        menuScreen.openTheMainMenu();
         mainScreen.isMainPage();
     }
 
@@ -154,9 +128,7 @@ public class PageTransfer {
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openAboutPageThroughTheMainMenu();
-        Allure.step("На главной странице экрана.");
         aboutScreen.isAboutPage();
-        Allure.step("Поиск меню на странице экрана. Меню на странице экрана отсутствует");
         menuScreen.menuIsOnScreen();
     }
 
@@ -166,11 +138,8 @@ public class PageTransfer {
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
         mainScreen.openAboutPageThroughTheMainMenu();
-        Allure.step("На главной странице экрана.");
         aboutScreen.isAboutPage();
-        Allure.step("Возвращаемся на главную страницу нажатием на кнопку назад.");
         aboutScreen.aboutBackImageButClick();
-        Allure.step("Открыта главная страница приложения.");
         mainScreen.isMainPage();
     }
 
@@ -181,12 +150,9 @@ public class PageTransfer {
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
         newsScreen.openEditPanel();
-        Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
         menuScreen.openTheMainMenu();
-        Allure.step("Переход на главную страницу.");
-        menuScreen.clickMain();
-        Allure.step("Открыта главная страница приложения.");
+        menuScreen.openTheMainMenu();
         mainScreen.isMainPage();
     }
 
@@ -197,12 +163,9 @@ public class PageTransfer {
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
         newsScreen.openEditPanel();
-        Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
         menuScreen.openTheMainMenu();
-        Allure.step("Переход на страниц новостей.");
         menuScreen.clickNews();
-        Allure.step("Открыта страница новостей.");
         mainScreen.isMainPage();
     }
 
@@ -213,12 +176,9 @@ public class PageTransfer {
         mainScreen.isMainPage();
         mainScreen.openNewsPageThroughTheMainMenu();
         newsScreen.openEditPanel();
-        Allure.step("Проверка наличия меню.");
         menuScreen.menuIsOnScreen();
         menuScreen.openTheMainMenu();
-        Allure.step("Переход на страниц новостей.");
         menuScreen.clickNews();
-        Allure.step("Открыта страница новостей.");
         mainScreen.isMainPage();
     }
 }

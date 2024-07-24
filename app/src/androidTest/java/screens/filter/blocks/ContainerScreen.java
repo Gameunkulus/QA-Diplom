@@ -15,6 +15,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 
 import org.hamcrest.Matcher;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 import tools.GenerateData;
 import tools.ModRecyclerViewActions;
@@ -35,6 +36,7 @@ public class ContainerScreen {
     public int newsItemTitleTextView = (R.id.news_item_title_text_view);
 
     void containerNewsIsOnScreen() {
+        Allure.step("Проверка контейнера новостей." );
         UIDevise.waitView(containerText).check(matches(isDisplayed()));
         UIDevise.waitView(containerAllNewsButton).check(matches(isDisplayed()));
         UIDevise.waitView(containerNewsSortButton).check(matches(isDisplayed()));
@@ -44,34 +46,41 @@ public class ContainerScreen {
     }
 
     void clickContainerSort() {
+        Allure.step("Нажатие на кнопку сортировка новости." );
         UIDevise.waitView(containerNewsSortButton).perform(click());
     }
 
     void clickContainerFilter() {
+        Allure.step("Нажатие на кнопку фильтр новостей." );
         UIDevise.waitView(containerFilterButton).perform(click());
     }
 
     void clickContainerEdit() {
+        Allure.step("Нажатие на кнопку редактировать новость." );
         UIDevise.waitView(containerEditButton).perform(click());
     }
 
     void clickContainerExpand() {
+        Allure.step("Нажатие на кнопку свернуть/развернуть контейнер новостей." );
         UIDevise.waitView(containerExpandButton).perform(click());
     }
 
     public void checkNewsDoesNotPresent(GenerateData.CreateNews news) {
+        Allure.step("Проверка отсутствия новости." );
         getblockNewsList()
                 .check(matches(ModRecyclerViewActions.RecyclerViewMatcher
                         .matchChildViewIsNotExist(newsItemTitleTextView, withText(news.getNewsName()))));
     }
 
     public ViewInteraction scrollToElementInRecyclerList(String description) {
+        Allure.step("Прокрутка к элементу в списке новостей." );
         return UIDevise.waitView(blockNewsList).check(matches(isDisplayed()))
                 // scrollTo will fail the test if no item matches.
                 .perform(RecyclerViewActions.scrollTo(hasDescendant(withText(description))));
     }
 
     public ViewInteraction getblockNewsList() {
+        Allure.step("Обращение к блоку новости в списке новостей." );
         return UIDevise.waitView(blockNewsList);
     }
 

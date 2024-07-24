@@ -1,4 +1,4 @@
-package ru.iteco.fmhandroid.ui;
+package ru.iteco.fmhandroid.ui.tests;
 
 
 import static tools.UIDevise.device;
@@ -14,25 +14,22 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDateTime;
 
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
-import io.qameta.allure.kotlin.Allure;
-import ru.iteco.fmhandroid.R;
+import ru.iteco.fmhandroid.ui.AppActivity;
 import screens.AuthScreen;
 import screens.ControlPanelListScreen;
 import screens.MainScreen;
 import screens.NewsScreen;
 import tools.GenerateData;
-import tools.TestListener;
 
-@ExtendWith(TestListener.class)
+
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
-public class DeleteNews {
+public class DeleteNewsTest {
 
     @Rule
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
@@ -55,33 +52,19 @@ public class DeleteNews {
     }
     @Test
     public void deleteNews() {
-        Allure.step("Заполнение верными значением поля логин и пароль с id: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
         authScreen.fillFields(GenerateData.authInfo());
-        Allure.step("Нажатие на кнопку войти.");
         authScreen.clickEnterButton();
-        Allure.step("Открыта главная страница приложения.");
         mainScreen.isMainPage();
-        Allure.step("Переход на страницу новостей через нажатие кнопки в меню." );
         mainScreen.openNewsPageThroughTheMainMenu();
-        Allure.step("Переход на страницу редактирования новостей через нажатие кнопки в меню." );
         newsScreen.openEditPanel();
-        Allure.step("Проверка что страница редактирования новостей открылась." );
         controlPanelListScreen.isControlPanel();
-        Allure.step("Проверка что имеется нужное сообщение." );
         GenerateData.CreateNews announcementNews = GenerateData.newsWithRandomNameAndDescription()
                 .withCategory(GenerateData.getCategoryAnnouncement()).withDueDate(LocalDateTime.now()).build();
         controlPanelListScreen.checkNewsIsPresent(announcementNews);
-
-        Allure.step("Нажимаем на кнопку удалить сообщение." );
         controlPanelListScreen.deleteItemNews(announcementNews.getNewsName());
-        Allure.step("Отмена удаление сообщения." );
         controlPanelListScreen.cancelDeleteButtonClick();
-        Allure.step("Повторно нажимаем на кнопку удалить сообщение." );
         controlPanelListScreen.deleteItemNews(announcementNews.getNewsName());
-        Allure.step("Подтверждаем удаление сообщения." );
         controlPanelListScreen.okButtonClick();
-        Allure.step("Проверяем что сообщение удалено." );
         controlPanelListScreen.checkNewsDoesNotPresent(announcementNews);
     }
 

@@ -29,6 +29,7 @@ import org.hamcrest.Matchers;
 
 import java.time.LocalDateTime;
 
+import io.qameta.allure.kotlin.Allure;
 import screens.filter.blocks.ContainerScreen;
 import ru.iteco.fmhandroid.R;
 import tools.GenerateData;
@@ -72,6 +73,7 @@ public class CreateNewsScreen {
 
     //Выбор категории новости из списка
     public void selectANewsCategoryFromTheList(String nameCategory) {
+        Allure.step("Выбор категории новости из списка." );
         UIDevise.waitView(newsItemCategoryField).perform(click());
         Espresso.closeSoftKeyboard();
         onView(withText(nameCategory)).inRoot((RootMatchers.isPlatformPopup())).check(matches(isDisplayed())).perform(click());
@@ -79,6 +81,7 @@ public class CreateNewsScreen {
 
     //задать дату в поле дата
     public void setDateToDatePicker(LocalDateTime date) {
+        Allure.step("Ввод даты в DatePicker." );
         UIDevise.waitView(newsItemPublishDateField).perform(click());
         UIDevise.waitView(datePicker).check(matches(isDisplayed()));
         UIDevise.waitView(datePicker).perform(setDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
@@ -86,12 +89,14 @@ public class CreateNewsScreen {
 
     //задать время в поле время
     public void setTimeToTimePicker(int hour, int minute) {
+        Allure.step("Ввод времени в TimePicker." );
         UIDevise.waitView(timePicker).check(matches(isDisplayed()));
         UIDevise.waitView(timePicker).perform(setTime(hour, minute));
     }
 
     //задать время в поле время через экранную клавиатуру
     public void setTimeToTimePickerFromTheKeyboard(String hour, String minutes) {
+        Allure.step("Ввод времени в TimePicker." );
         UIDevise.waitView(timePicker).check(matches(isDisplayed()));
         UIDevise.waitView(timePickerToggleMode).perform(click());
         UIDevise.waitView(inputHour).check(matches(isDisplayed())).perform(replaceText(hour));
@@ -101,11 +106,13 @@ public class CreateNewsScreen {
 
     //открыть поле время
     public void openNewsTimePicker() {
+        Allure.step("Открыть поле ввода времени." );
         UIDevise.waitView(newsItemPublishTimeField).perform(click());
     }
 
     //задать время в поле времени
     public void setTimeToTimeField(LocalDateTime date) {
+        Allure.step("Ввод времени в поле время с доски ввода на смартфоне." );
         UIDevise.waitView(newsItemPublishTimeField).perform(click());
         setTimeToTimePicker(date.getHour(), date.getMinute());
         UIDevise.waitView(okBut).perform(click());
@@ -114,6 +121,7 @@ public class CreateNewsScreen {
 
     //проверка перехода на страницу создания новости
     public void isCreatingNewsForm() {
+        Allure.step("Открыта страница заполнения формы новости." );
         UIDevise.waitView(newsItemCategoryField).check(matches(isDisplayed()));
         UIDevise.waitView(newsItemTitleField).check(matches(isDisplayed()));
         UIDevise.waitView(newsItemPublishDateField).check(matches(isDisplayed()));
@@ -126,107 +134,129 @@ public class CreateNewsScreen {
 
     //сообщение об ошибке при сохранении сообщения
     public void isDialogWindowMessageSavingFailed() {
+        Allure.step("Сообщение об ошибке сохранения сообщения." );
         UIDevise.waitView(withText("Saving failed. Try again later.")).check(matches(isDisplayed()));
         UIDevise.waitView(okBut).check(matches(isDisplayed()));
     }
 
     //проверка поля титл
     public ViewInteraction getNewsItemTitle() {
+        Allure.step("Обращение к полю ввода Тайтла сообщения." );
         return UIDevise.waitView(newsItemTitleField);
     }
 
     //нажать на кнопку сохранить
     public void saveButtonClick() {
+        Allure.step("Обращение к полю ввода Тайтла сообщения." );
         UIDevise.waitView(saveBut).perform(click());
     }
 
     //нажать на кнопку отменить
     public void cancelButtonClick() {
+        Allure.step("Нажатие кнопки отмена." );
         UIDevise.waitView(cancelBut).perform(click());
     }
 
     //получить сообщение внесенные изменения не будут сохранены
-    public ViewInteraction getMessageChangesWonTBeSaved() {
+    public ViewInteraction getMessageChangesWonTBeSaved(){
+        Allure.step("Получение сообщения что внесенные изменения не сохранятся." );
         return UIDevise.waitView(messageChangesWonTBeSaved);
     }
 
     //нажать на кнопку ОК в всплывающем окне
     public void okButtonClick() {
+        Allure.step("Нажатие кнопки подтвердить в всплывающем окне." );
         UIDevise.waitView(okBut).perform(click());
     }
 
     //нажать на кнопку отмену в всплывающем окне
     public void cancelDeleteButtonClick() {
+        Allure.step("Нажатие кнопки отмена в всплывающем окне." );
         UIDevise.waitView(cancelDeleteBut).perform(click());
     }
 
     //смена категрии новости
     public void replaceNewsCategoryText(String category) {
+        Allure.step("Получение сообщения что внесенные изменения не сохранятся." );
         UIDevise.waitView(newsItemCategoryField).perform(replaceText(category));
     }
 
     //смена статуса новости
     public void switchNewsStatus() {
+        Allure.step("Переключение статуса активности новости." );
         UIDevise.waitView(switcher).perform(click());
     }
 
     //взять дату публикации
     public ViewInteraction getNewsItemPublishDate() {
+        Allure.step("Обращение на дату публикации новости." );
         return UIDevise.waitView(newsItemPublishDateField);
     }
 
     //взять время публикации
     public ViewInteraction getNewsItemPublishTime() {
+        Allure.step("Обращение к полю дата публикации новости." );
         return UIDevise.waitView(newsItemPublishTimeField);
     }
 
     //взять категорию публикации новости
     public ViewInteraction getNewsItemCategory() {
+        Allure.step("Обращение к полю категория новости." );
         return UIDevise.waitView(newsItemCategoryField);
     }
 
     //взять описание новости
     public ViewInteraction getNewsItemDescription() {
+        Allure.step("Обращение к полю описание новости." );
         return UIDevise.waitView(newsItemDescriptionField);
     }
 
     public void creatingNews(GenerateData.CreateNews news) {
+        Allure.step("Создание новости." );
         selectANewsCategoryFromTheList(news.getNewsCategory());
         fillingOutTheFormCreatingNewsWithDate(news);
         UIDevise.waitView(saveBut).perform(click());
     }
 
     public void createNews(GenerateData.CreateNews... array) {
+        Allure.step("Создание новостей." );
         for (GenerateData.CreateNews news : array) {
             creatingNews(news);
         }
     }
 
     public void fillingOutTheFormCreatingNewsWithDate(GenerateData.CreateNews news) {
+        Allure.step("Заполнение полей даты и времени создания новости." );
         UIDevise.waitView(newsItemTitleField).perform(replaceText(news.getNewsName()));
         setDateToDatePicker(news.getDueDate());
         UIDevise.waitView(okBut).perform(click());
         setTimeToTimeField(news.getDueDate());
+        UIDevise.waitView(okBut).perform(click());
         UIDevise.waitView(newsItemDescriptionField).perform(replaceText(news.getNewsDescription()));
     }
 
     public void replaceNewsTitleText(String title) {
+        Allure.step("Замена содержимого тайтла новости." );
         UIDevise.waitView(newsItemTitleField).perform(replaceText(title));
     }
 
     public void replaceNewsDescriptionText(String description) {
+        Allure.step("Замена содержимого описания новости." );
         UIDevise.waitView(newsItemDescriptionField).perform(replaceText(description));
     }
 
     public ViewInteraction getItemNewsEditElement(String title) {
+        Allure.step("Обращение к элементу с указанным тайтлом." );
         return onView(allOf(withText(title)));
     }
 
     public ViewInteraction getItemNewsButViewElement(String title) {
+        Allure.step("Обращение к элементу на экране с указанным тайтлом." );
         return onView(withParent(withText(title)));
     }
 
     public ViewInteraction getItemNewsDescriptionElement(String title) {
+        Allure.step("Обращение к элементу на экране с указанным описанием." );
         return onView(withText(title));
     }
 

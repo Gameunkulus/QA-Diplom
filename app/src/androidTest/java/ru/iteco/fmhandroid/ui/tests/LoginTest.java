@@ -1,7 +1,6 @@
-package ru.iteco.fmhandroid.ui;
+package ru.iteco.fmhandroid.ui.tests;
 
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static tools.UIDevise.device;
 
 import android.os.RemoteException;
@@ -15,21 +14,19 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
-import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
+import ru.iteco.fmhandroid.ui.AppActivity;
 import screens.AuthScreen;
 import screens.MainScreen;
 import tools.GenerateData;
-import tools.TestListener;
 
-@ExtendWith(TestListener.class)
+
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
-public class TestLogin {
+public class LoginTest {
 
 
 
@@ -54,29 +51,16 @@ public class TestLogin {
 
     @Test
     public void testInvalidPassword() {
-        Allure.step("Заполнение верным значением поля логин и неверным значением пароля с id: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
         authScreen.fillFields(GenerateData.invalidAuthInfo());
-        Allure.step("Нажатие на кнопку войти: " +
-                R.id.enter_button + ";" );
-        String expectedWarning = getApplicationContext().getString(R.string.error);
         authScreen.clickEnterButton();
-        Allure.step("Получение сообщения об ошибке: " + R.string.error + ";" );
         authScreen.isToastMessageDisplayed(R.string.error);
-
     }
 
     @Test
     public void testValidLogin() {
-
-        Allure.step("Заполнение верными значением поля логин и пароль с id: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
         authScreen.fillFields(GenerateData.authInfo());
-        Allure.step("Нажатие на кнопку войти: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
-
     }
 
 }

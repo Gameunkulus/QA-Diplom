@@ -11,6 +11,7 @@ import androidx.test.espresso.ViewInteraction;
 
 import org.hamcrest.Matcher;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 import tools.UIDevise;
 
@@ -27,34 +28,42 @@ public class BlockEditNewsScreen {
     public Matcher<View> blockEditBtn = withId(R.id.edit_news_item_image_view);
 
     public ViewInteraction getBlockTitle() {
+        Allure.step("Обращение к элементу тайтл." );
         return UIDevise.waitView(blockTitle);
     }
 
     public ViewInteraction getPubDate() {
+        Allure.step("Обращение к элементу дата публикации." );
         return UIDevise.waitView(blockPubDate);
     }
 
     public ViewInteraction getCreateDate() {
+        Allure.step("Обращение к элементу дата создания." );
         return UIDevise.waitView(blockCreateDate);
     }
 
     public ViewInteraction getAuthor() {
+        Allure.step("Обращение к элементу автор новости." );
         return UIDevise.waitView(blockAuthor);
     }
 
     public ViewInteraction getDescription() {
+        Allure.step("Обращение к элементу описание." );
         return UIDevise.waitView(blockDescription);
     }
 
     public void pressExpandBtn() {
+        Allure.step("Нажатие на кнопку свернуть/развернуть." );
         UIDevise.waitView(blockExpandBtn).perform(click());
     }
 
     public void pressDeleteBtn() {
+        Allure.step("Нажатие на кнопку удалить." );
         UIDevise.waitView(blockDeleteBtn).perform(click());
     }
 
     public void pressEditBtn() {
+        Allure.step("Нажатие на кнопку редактировать." );
         UIDevise.waitView(blockEditBtn).perform(click());
     }
 

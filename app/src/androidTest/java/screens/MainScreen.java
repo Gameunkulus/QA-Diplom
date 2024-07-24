@@ -14,6 +14,7 @@ import androidx.test.espresso.assertion.ViewAssertions;
 
 import org.hamcrest.Matcher;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 import tools.MenuScreen;
 import tools.UIDevise;
@@ -32,52 +33,62 @@ public class MainScreen {
     public Matcher<View> newsExpandMaterialBut = newsScreen.expandMaterialButton;
     public Matcher<View> allNewsCardsBlockConstraintLayout = withId(R.id.all_news_cards_block_constraint_layout);
     public Matcher<View> scrollView = withClassName(endsWith("ScrollView"));
+    public Matcher<View> menuMainButton = withId(R.id.menu_item_main);
+    public Matcher<View> menuNewsButton = withId(R.id.menu_item_news);
+    public Matcher<View> menuAboutButton = withId(R.id.menu_item_about);
 
     public void isMainPage() {
+        Allure.step("Проверка перехода на главную страницу.");
         UIDevise.waitView(newsBlockHeader).check(ViewAssertions.matches(isDisplayed()));
         UIDevise.waitView(withId(R.id.container_list_news_include_on_fragment_main)).check(ViewAssertions.matches(isDisplayed()));
     }
 
     public void clickLogOutBut() {
+        Allure.step("Нажатие на кнопку выхода из аккаунта.");
         UIDevise.waitView(authImBut).check(ViewAssertions.matches(isDisplayed())).perform(click());
         UIDevise.waitView(logOutBut).check(ViewAssertions.matches(isDisplayed())).perform(click());
     }
 
     public void openNewsPageThroughTheMainMenu() {
-        UIDevise.waitView(mainMenuImBut).perform(click());
-        menuScreen.menuIsOnScreen();
-        menuScreen.clickNews();
+        Allure.step("Переход на страницу новостей через нажатие кнопки в меню." );
+        UIDevise.waitView(mainMenuImBut).check(ViewAssertions.matches(isDisplayed())).perform(click());
+        UIDevise.waitView(menuNewsButton).check(ViewAssertions.matches(isDisplayed())).perform(click());
     }
 
     public void openAboutPageThroughTheMainMenu() {
+        Allure.step("Переход на страницу о приложении." );
         UIDevise.waitView(mainMenuImBut).perform(click());
         menuScreen.menuIsOnScreen();
         menuScreen.clickAbout();
     }
 
     public void openMainPageThroughTheMainMenu() {
+        Allure.step("Переход на главную страницу." );
         UIDevise.waitView(mainMenuImBut).perform(click());
         menuScreen.menuIsOnScreen();
-        menuScreen.clickMain();
+        menuScreen.openTheMainMenu();
     }
 
 
     public void isNewsBlockCollapsed() {
+        Allure.step("Проверка сернутости блока All news.");
         UIDevise.waitView(newsBlockHeader).check(ViewAssertions.matches(isDisplayed()));
         UIDevise.waitView(allNewsBut).check(ViewAssertions.matches(not(isDisplayed())));
         UIDevise.waitView(allNewsCardsBlockConstraintLayout).check(ViewAssertions.matches(not(isDisplayed())));
     }
 
     public void openOurMissionPage() {
+        Allure.step("Проверка перехода на страницу наша миссия.");
         UIDevise.waitView(ourMissionImBut).perform(click());
     }
 
     public void clickAllNewsBut() {
+        Allure.step("Открыть страницу новостей с помощью кнопки 'All news' в блоке новостей.");
         UIDevise.waitView(allNewsBut).perform(click());
     }
 
     public void newsExpandMaterialButtonClick() {
+        Allure.step("Нажатие на клавишу 'свернуть/развернуть' блока новостей");
         UIDevise.waitView(newsExpandMaterialBut).perform(click());
     }
-
 }

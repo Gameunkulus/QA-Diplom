@@ -21,6 +21,7 @@ import org.hamcrest.Matcher;
 
 import java.time.LocalDateTime;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 import tools.UIDevise;
 
@@ -42,6 +43,7 @@ public class FilterNewsScreen {
 
 
     public void isFilterNewsForm() {
+        Allure.step("Открыта страница фильтра новостей." );
         UIDevise.waitView(titleButton).check(matches(isDisplayed()));
         UIDevise.waitView(categoryButton).check(matches(isDisplayed()));
         UIDevise.waitView(startDateLine).check(matches(isDisplayed()));
@@ -51,18 +53,21 @@ public class FilterNewsScreen {
     }
 
     public void isFilterNewsFormControlPanel() {
+        Allure.step("Открыта панеь управления страницы фильтра новостей." );
         isFilterNewsForm();
         UIDevise.waitView(filterNewsActive).check(matches(isDisplayed()));
         UIDevise.waitView(filterNewsNotActive).check(matches(isDisplayed()));
     }
 
     public void selectANewsCategoryFromTheList(String nameCategory) {
+        Allure.step("Выбор категории фильтра из списка." );
         UIDevise.waitView(categoryButton).perform(click());
         Espresso.closeSoftKeyboard();
         onView(withText(nameCategory)).inRoot((RootMatchers.isPlatformPopup())).check(matches(isDisplayed())).perform(click());
     }
 
     public void fillingOutTheFilterNewsForm(String nameCategory, LocalDateTime startDate, LocalDateTime endDate, boolean Active, boolean Notactive) {
+        Allure.step("Заполнение строк фильтра.");
         selectANewsCategoryFromTheList(nameCategory);
         setDateToDatePicker(startDateLine, startDate);
         UIDevise.waitView(messageOkBut).perform(click());
@@ -78,12 +83,14 @@ public class FilterNewsScreen {
     }
 
     public void setDateToDatePicker(Matcher<View> nameDatePicker, LocalDateTime date) {
+        Allure.step("Ввод даты в DatePicker." );
         UIDevise.waitView(nameDatePicker).perform(click());
         UIDevise.waitView(datePicker).check(matches(isDisplayed()));
         UIDevise.waitView(datePicker).perform(setDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()));
     }
 
     public void pressMessageButton(Boolean OK) {
+        Allure.step("Заполнение строк фильтра.");
         UIDevise.waitView(messageOkBut).check(matches(isDisplayed()));
         UIDevise.waitView(messageCancelBut).check(matches(isDisplayed()));
         if (OK) {
@@ -94,22 +101,27 @@ public class FilterNewsScreen {
     }
 
     public void filterNewsButtonClick() {
+        Allure.step("Подтверждение установленных параметров фильтра.");
         UIDevise.waitView(filterFilterBtn).perform(click());
     }
 
     public void cancelNewsButtonClick() {
+        Allure.step("Нажатие на кнопку отмены.");
         UIDevise.waitView(filterCancelBtn).perform(click());
     }
 
     public ViewInteraction getNewsFilterCategoryField() {
+        Allure.step("Обращение к полю категория новости." );
         return UIDevise.waitView(categoryButton);
     }
 
     public ViewInteraction getNewsFilterPublishDateStartField() {
+        Allure.step("Обращение к полю ранней даты." );
         return UIDevise.waitView(startDateLine);
     }
 
     public ViewInteraction getNewsFilterPublishDateEndField() {
+        Allure.step("Обращение к полю поздней даты." );
         return UIDevise.waitView(endDateLine);
     }
 

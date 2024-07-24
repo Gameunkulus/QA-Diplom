@@ -1,4 +1,4 @@
-package ru.iteco.fmhandroid.ui;
+package ru.iteco.fmhandroid.ui.tests;
 
 
 import static tools.UIDevise.device;
@@ -14,26 +14,23 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDateTime;
 
-import screens.filter.FilterNewsScreen;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
-import io.qameta.allure.kotlin.Allure;
-import ru.iteco.fmhandroid.R;
+import ru.iteco.fmhandroid.ui.AppActivity;
 import screens.AuthScreen;
+import screens.ControlPanelListScreen;
 import screens.MainScreen;
 import screens.NewsScreen;
+import screens.filter.FilterNewsScreen;
 import tools.GenerateData;
-import tools.MenuScreen;
-import tools.TestListener;
 
-@ExtendWith(TestListener.class)
+
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
-public class FilterNews {
+public class RedactorFilterNewsTest {
 
     @Rule
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
@@ -41,7 +38,7 @@ public class FilterNews {
     private AuthScreen authScreen = new AuthScreen();
     private MainScreen mainScreen = new MainScreen();
     private NewsScreen newsScreen = new NewsScreen();
-    private MenuScreen menuScreen = new MenuScreen();
+    private ControlPanelListScreen controlPanelListScreen = new ControlPanelListScreen();
     private FilterNewsScreen filterNewsScreen = new FilterNewsScreen();
 
     @Before
@@ -56,27 +53,21 @@ public class FilterNews {
         }
     }
     @Test
-    public void filterNews() {
-        Allure.step("Заполнение верными значением поля логин и пароль с id: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
+    public void redactorFilterNews() {
         authScreen.fillFields(GenerateData.authInfo());
-        Allure.step("Нажатие на кнопку войти.");
         authScreen.clickEnterButton();
-        Allure.step("Открыта главная страница приложения.");
         mainScreen.isMainPage();
-        Allure.step("Переход на страницу новостей.");
-        menuScreen.openTheMainMenu();
-        menuScreen.clickNews();
-        Allure.step("Открытие фильтра новостей.");
-        newsScreen.openFilterNews();
-        Allure.step("Проверка работы кнопки отмена.");
+        mainScreen.openNewsPageThroughTheMainMenu();
+        mainScreen.openNewsPageThroughTheMainMenu();
+        newsScreen.isNewsPage();
+        newsScreen.openEditPanel();
+        controlPanelListScreen.isControlPanel();
+        controlPanelListScreen.clickOpenFilterButton();
         filterNewsScreen.cancelNewsButtonClick();
         filterNewsScreen.pressMessageButton(false);
-        Allure.step("Заполнение строк фильтра.");
         filterNewsScreen.fillingOutTheFilterNewsForm("Праздник", LocalDateTime.now().minusDays(1),LocalDateTime.now().plusDays(1),true,true);
         filterNewsScreen.filterNewsButtonClick();
-        Allure.step("Проверка наличия новостей на экране.");
-        newsScreen.isEmptyNewsList();
+        controlPanelListScreen.isEmptyNewsList();
     }
 
 }

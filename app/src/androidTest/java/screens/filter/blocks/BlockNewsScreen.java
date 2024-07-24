@@ -10,6 +10,7 @@ import androidx.test.espresso.ViewInteraction;
 
 import org.hamcrest.Matcher;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 import tools.UIDevise;
 
@@ -21,14 +22,20 @@ public class BlockNewsScreen {
     public Matcher<View> blockDescription = withText(R.string.news_item_description);
 
     public ViewInteraction pressExpandBtn(){
+        Allure.step("Нажатие на кнопку свернуть/развернуть блока новости." );
         return UIDevise.waitView(blockExpandBtn).perform(click());
     }
 
-    public ViewInteraction getBlockTitle(){
+    public ViewInteraction getBlockTitle() {
+        Allure.step("Обращение к элементу тайтл." );
         return UIDevise.waitView(blockTitle);
     }
 
-    public ViewInteraction getDate() { return UIDevise.waitView(blockDate); }
+    public ViewInteraction getDate() {
+        Allure.step("Обращение к элементу дата." );
+        return UIDevise.waitView(blockDate); }
 
-    public ViewInteraction getDescription() { return  UIDevise.waitView(blockDescription); }
+    public ViewInteraction getDescription() {
+        Allure.step("Обращение к элементу описание." );
+        return  UIDevise.waitView(blockDescription); }
 }

@@ -1,4 +1,4 @@
-package ru.iteco.fmhandroid.ui;
+package ru.iteco.fmhandroid.ui.tests;
 
 
 import static tools.UIDevise.device;
@@ -14,27 +14,24 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 
 import java.time.LocalDateTime;
 
-import screens.filter.blocks.ReadyNews;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
-import io.qameta.allure.kotlin.Allure;
-import ru.iteco.fmhandroid.R;
+import ru.iteco.fmhandroid.ui.AppActivity;
 import screens.AuthScreen;
 import screens.ControlPanelListScreen;
 import screens.CreateNewsScreen;
 import screens.MainScreen;
 import screens.NewsScreen;
+import screens.filter.blocks.ReadyNews;
 import tools.GenerateData;
-import tools.TestListener;
 
-@ExtendWith(TestListener.class)
+
 @LargeTest
 @RunWith(AllureAndroidJUnit4.class)
-public class CreateNewNews {
+public class CreateNewNewsTest {
 
     @Rule
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
@@ -57,44 +54,30 @@ public class CreateNewNews {
             mainScreen.clickLogOutBut();
         }
     }
+
     @Test
     public void createNewNews() {
-        Allure.step("Заполнение верными значением поля логин и пароль с id: " +
-                R.id.login_text_input_layout + ";\n " + R.id.password_text_input_layout + ";" );
         authScreen.fillFields(GenerateData.authInfo());
-        Allure.step("Нажатие на кнопку войти.");
         authScreen.clickEnterButton();
-        Allure.step("Открыта главная страница приложения.");
         mainScreen.isMainPage();
-        Allure.step("Переход на страницу новостей через нажатие кнопки в меню." );
         mainScreen.openNewsPageThroughTheMainMenu();
-        Allure.step("Переход на страницу редактирования новостей через нажатие кнопки в меню." );
         newsScreen.openEditPanel();
-        Allure.step("Проверка что страница редактирования новостей открылась." );
         controlPanelListScreen.isControlPanel();
-        Allure.step("Нажатие на кнопку создать новость." );
         controlPanelListScreen.openCreatingNewsForm();
-        Allure.step("Нажатие на кнопку отменить создание новости." );
         createNewsScreen.cancelButtonClick();
-        Allure.step("Подтвердить отмену создания новости." );
         createNewsScreen.okButtonClick();
-        Allure.step("Проверка что страница редактирования новостей открылась." );
         controlPanelListScreen.isControlPanel();
-        Allure.step("Нажатие на кнопку создать новость." );
         controlPanelListScreen.openCreatingNewsForm();
-        Allure.step("Создание новости на завтра." );
         createNewsScreen.selectANewsCategoryFromTheList("Объявление");
         createNewsScreen.replaceNewsTitleText(readyNews.getTitle());
         createNewsScreen.setDateToDatePicker(LocalDateTime.now());
         createNewsScreen.setTimeToTimeField(LocalDateTime.now());
         createNewsScreen.replaceNewsDescriptionText(readyNews.getDescription());
         createNewsScreen.switchNewsStatus();
-        Allure.step("Проверяем работу кнопки отмены создания новости.");
         createNewsScreen.cancelButtonClick();
         createNewsScreen.cancelDeleteButtonClick();
         createNewsScreen.saveButtonClick();
         createNewsScreen.okButtonClick();
-        Allure.step("Проверяем наличие новости.");
         controlPanelListScreen.checkNewsIsPresent(readyNews.getTitle());
 
     }
