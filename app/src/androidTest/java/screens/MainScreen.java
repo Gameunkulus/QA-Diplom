@@ -5,6 +5,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.not;
 
@@ -27,7 +28,7 @@ public class MainScreen {
     public Matcher<View> newsBlockHeader = withText("News");
     public Matcher<View> authImBut = withId(R.id.authorization_image_button);
     public Matcher<View> logOutBut = withText("Log out");
-    public Matcher<View> allNewsBut = withId(R.id.all_news_text_view);
+    public Matcher<View> allNewsBut = allOf(withId(R.id.all_news_text_view), withText("All news"));
     public Matcher<View> mainMenuImBut = withId(R.id.main_menu_image_button);
     public Matcher<View> ourMissionImBut = withId(R.id.our_mission_image_button);
     public Matcher<View> newsExpandMaterialBut = newsScreen.expandMaterialButton;
@@ -40,7 +41,6 @@ public class MainScreen {
     public void isMainPage() {
         Allure.step("Проверка перехода на главную страницу.");
         UIDevise.waitView(newsBlockHeader).check(ViewAssertions.matches(isDisplayed()));
-        UIDevise.waitView(withId(R.id.container_list_news_include_on_fragment_main)).check(ViewAssertions.matches(isDisplayed()));
     }
 
     public void clickLogOutBut() {

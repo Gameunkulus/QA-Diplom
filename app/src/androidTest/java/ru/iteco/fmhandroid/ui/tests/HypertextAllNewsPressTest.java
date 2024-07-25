@@ -14,8 +14,11 @@ import androidx.test.uiautomator.UiDevice;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 
+import io.qameta.allure.android.rules.LogcatRule;
+import io.qameta.allure.android.rules.ScreenshotRule;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import ru.iteco.fmhandroid.ui.AppActivity;
 import screens.AuthScreen;
@@ -29,6 +32,10 @@ import tools.GenerateData;
 public class HypertextAllNewsPressTest {
 
     @Rule
+    public RuleChain ruleChain = RuleChain
+            .outerRule(new LogcatRule())
+            .around(new ActivityScenarioRule<>(AppActivity.class))
+            .around(new ScreenshotRule());
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(AppActivity.class);
     private AuthScreen authScreen = new AuthScreen();
@@ -51,8 +58,6 @@ public class HypertextAllNewsPressTest {
         authScreen.fillFields(GenerateData.authInfo());
         authScreen.clickEnterButton();
         mainScreen.isMainPage();
-        mainScreen.newsExpandMaterialButtonClick();
-        mainScreen.newsExpandMaterialButtonClick();
         mainScreen.clickAllNewsBut();
         newsScreen.isNewsPage();
     }
